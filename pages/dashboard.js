@@ -22,6 +22,7 @@ export default function Dashboard() {
     <div>
       <h1>Dashboard</h1>
       <p>Welcome to the dashboard!</p>
+      <button onClick={() => router.push('/product')}>Manage Products</button>
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
