@@ -3,11 +3,12 @@ import axios from 'axios';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
+  const API_URL = process.env.NEXT_APP_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get(`${API_URL}/api/products`);
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -24,7 +25,7 @@ export default function Home() {
           products.map((product) => (
             <div key={product.id} className="product-card">
               <img
-                src={`http://localhost:5000/uploads/${product.image}`}
+                src={`${API_URL}/uploads/${product.image}`}
                 alt={product.name}
                 className="product-image"
               />
@@ -116,12 +117,13 @@ export default function Home() {
           font-size: 1.2rem;
           color: #666;
           padding: 20px;
+          grid-column: 1 / -1;
         }
 
-        /* Responsif */
+        /* Responsif untuk Tablet (max-width: 768px) - 2 kolom */
         @media (max-width: 768px) {
           .product-list {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* Pastikan 2 kolom */
           }
 
           .title {
@@ -135,15 +137,24 @@ export default function Home() {
           .product-image {
             height: 150px;
           }
+
+          .product-card {
+            margin: 0;
+          }
         }
 
+        /* Responsif untuk Mobile Kecil (max-width: 480px) - 1 kolom */
         @media (max-width: 480px) {
           .product-list {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* 1 kolom */
           }
 
           .title {
             font-size: 1.8rem;
+          }
+
+          .product-image {
+            height: 180px;
           }
 
           .product-card {
